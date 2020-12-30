@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import React, {useState} from 'react';
+import DefaultWeather from './Components/defaultWeather';
 
 const api ={
   key: "9f23490722d48947305d975a9a428ef3",
@@ -11,39 +12,6 @@ function App() {
 
   const [query, setQuery] = useState('');
   const [weather, setWeather] = useState({});
-  const [defaultWeather, setDefaultWeather] = useState({});
-
-
-
-  const getDefault = () => {
-    // debugger;
-    const success = (position) => {
-      let lat = position.coords.latitude;
-      let long = position.coords.longitude;
-      console.log("position at componentWillMount:");
-      console.log(`Lattitude: ${lat}\n` + `Longitude: ${long}`);
-
-      fetch(`${api.baseUrl}weather?lat=${lat}&lon=${long}&units=metric&APIKEY=${api.key}`)
-        .then(response => response.json())
-        .then(result => {
-          setDefaultWeather(result);
-          console.log(result);
-        })
-        .catch(error =>{
-          alert("failure to read default location");
-          console.log("caught from default load");
-          console.log(error);
-        })
-    }
-
-    const errorMessage = () => {alert("Cannot find current location - please enable location services")}
-
-    if(navigator.geolocation){
-      navigator.geolocation.getCurrentPosition(success, errorMessage);
-    } else {
-        alert("Geolocation not authorized");
-    }
-  }
 
   const search = evt => {
     if(evt.key === "Enter") {
@@ -107,28 +75,8 @@ function App() {
         </div>
       </div>
 
-      ) : ( // onload
-        // <div onClick={getDefault}>
-        <div>
-          <div className="image-box">
-
-          </div>
-          <div className="location-box">
-            {/* <div className="location">your current location</div> */}
-            <div className="location">Please enter your city above</div>
-            <div className="date">{dateBuilder(new Date())}</div>
-          </div>
-
-          <div className="weather-box">
-            <div className="temp">
-              {/* {Math.round(defaultWeather.main.temp)}°C */}
-            </div>
-          </div>
-
-          <div className="weather-description">
-            {/* {defaultWeather.weather[0].main} */}
-          </div>
-        </div>
+      ) : ( // default case aka on inital load, when no search has been done yet 
+          <DefaultWeather date={dateBuilder(new Date())} />
       )}
 
     </div>
