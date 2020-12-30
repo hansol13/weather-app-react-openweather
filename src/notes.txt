@@ -1,0 +1,42 @@
+simple design layout
+
+----icon----
+----temp----
+----desc----
+----city----
+-cc--c/f--g-
+
+cc = change city
+c/f = celcius/farenheit button
+g = graph for 7 days
+icons taken from weather-icons folder
+temp = celcius default
+desc = description given by openweather
+city = defult will be coordinates, change to city based on user input later
+
+material-ui structure https://material-ui.com/
+
+-main display-
+<icons/>
+<temperature reading/>
+<description/>
+<current location/>
+
+<divider/>
+-change city-
+<button>
+    <dialog>
+        <form/> -- textfield
+        <button submit/>
+    </dialog>
+</button>
+    
+-celcius/farenheit
+<button/>
+
+-graph-
+<button>
+    <dialog>
+        <graph will appear in the dialog/>
+    </dialog>
+</button>
