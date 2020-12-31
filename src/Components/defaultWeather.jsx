@@ -15,7 +15,8 @@ class DefaultWeather extends Component {
             city: '',
             country: '',
             description: '',
-            temp:''
+            temp: '',
+            imgPath: '',
         };
     };
 
@@ -29,11 +30,14 @@ class DefaultWeather extends Component {
             fetch(`${api.baseUrl}weather?lat=${lat}&lon=${long}&units=metric&APIKEY=${api.key}`)
               .then(response => response.json())
               .then(result => {
+                let nightMode = result.dt > result.sys.sunset ? "nt_" : "";
+                //   console.log(nightMode);
                 this.setState({
                     city: result.name,
                     country: result.sys.country,
                     description: result.weather[0].main,
-                    temp: result.main.temp
+                    temp: result.main.temp,
+                    imgPath: "/weather-icons/svg/"+nightMode+result.weather[0].main.toLowerCase()+".svg",
                 });
               })
               .catch(error =>{
@@ -57,7 +61,9 @@ class DefaultWeather extends Component {
     render(){
         return(
             <div>
-                <div className="image-box"></div>      
+                <div className="image-box">
+                    <img src={this.state.imgPath} alt="null"/>
+                </div>      
                 <div className="location-box">
                     <div className="location">{this.state.city}, {this.state.country}</div>
                     <div className="date">{this.props.date}</div>

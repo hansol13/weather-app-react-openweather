@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import React, {useState} from 'react';
 import DefaultWeather from './Components/defaultWeather';
@@ -12,14 +11,18 @@ function App() {
 
   const [query, setQuery] = useState('');
   const [weather, setWeather] = useState({});
+  const [imgPath, setImgPath] = useState('');
 
   const search = evt => {
     if(evt.key === "Enter") {
       fetch(`${api.baseUrl}weather?q=${query}&units=metric&APPID=${api.key}`)
         .then(response => response.json())
         .then(result => {
+          let nightMode = result.dt > result.sys.sunset ? "nt_" : "";
+          let path = "/weather-icons/svg/"+nightMode+result.weather[0].main.toLowerCase()+".svg"
           setQuery('');
           setWeather(result);
+          setImgPath(path);
           console.log(result);
         })
         .catch(error => {
@@ -57,7 +60,7 @@ function App() {
       {(typeof weather.main != "undefined") ? (
       <div>
         <div className="image-box">
-
+          <img src={imgPath} alt="null"/> 
         </div>
         <div className="location-box">
           <div className="location">{weather.name}, {weather.sys.country}</div>
@@ -74,9 +77,9 @@ function App() {
           {weather.weather[0].main}
         </div>
       </div>
-
+      
       ) : ( // default case aka on inital load, when no search has been done yet 
-          <DefaultWeather date={dateBuilder(new Date())} />
+        <DefaultWeather date={dateBuilder(new Date())} />
       )}
 
     </div>
