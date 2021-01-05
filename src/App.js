@@ -71,6 +71,28 @@ function App() {
           <div className="temp">
             {Math.round(weather.main.temp)}°C
           </div>
+          <div className="detailed-info">
+            <table>
+              <tbody>
+              <tr>
+                <td>High/Low</td>
+                <td>{Math.round(weather.main.temp_max)}°C/{Math.round(weather.main.temp_min)}°C</td>
+              </tr>
+              <tr>
+                <td>Sunrise</td>
+                <td>{new Date(weather.sys.sunrise*1000).toLocaleTimeString("en-us")}</td>
+              </tr>
+              <tr>
+                <td>Sunset</td>
+                <td>{new Date(weather.sys.sunset*1000).toLocaleTimeString("en-us")}</td>
+              </tr>
+              <tr>
+                <td>Humidity</td>
+                <td>{weather.main.humidity}%</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <div className="weather-description">

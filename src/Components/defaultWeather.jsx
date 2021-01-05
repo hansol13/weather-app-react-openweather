@@ -6,7 +6,7 @@ const api ={
     baseUrl: "https://api.openweathermap.org/data/2.5/"
 }
 
-  
+
 
 class DefaultWeather extends Component {
     constructor(props) {
@@ -16,6 +16,12 @@ class DefaultWeather extends Component {
             country: '',
             description: '',
             temp: '',
+            high: '',
+            low: '',
+            sunrise: '',
+            sunset: '',
+            humidity: '',
+            feelsLike: '',
             imgPath: '',
         };
     };
@@ -30,13 +36,25 @@ class DefaultWeather extends Component {
             fetch(`${api.baseUrl}weather?lat=${lat}&lon=${long}&units=metric&APIKEY=${api.key}`)
               .then(response => response.json())
               .then(result => {
+                  console.log(result);
                 let nightMode = result.dt > result.sys.sunset ? "nt_" : "";
                 //   console.log(nightMode);
+
+                let sunriseCalc = new Date(result.sys.sunrise*1000).toLocaleTimeString("en-us");
+                let sunsetCalc = new Date(result.sys.sunset*1000).toLocaleTimeString("en-us");
+                // console.log(ss);
+
                 this.setState({
                     city: result.name,
                     country: result.sys.country,
                     description: result.weather[0].main,
                     temp: result.main.temp,
+                    high: result.main.temp_max,
+                    low: result.main.temp_min,
+                    sunrise: sunriseCalc,
+                    sunset: sunsetCalc,
+                    humidity: result.main.humidity,
+                    feelsLike: result.main.feels_like,
                     imgPath: "/weather-icons/svg/"+nightMode+result.weather[0].main.toLowerCase()+".svg",
                 });
               })
@@ -70,8 +88,32 @@ class DefaultWeather extends Component {
                 </div>
 
                 <div className="weather-box">
+                    
                     <div className="temp">
                         {Math.round(this.state.temp)}°C
+                    </div>
+
+                    <div className="detailed-info">
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td>High/Low</td>
+                                <td>{Math.round(this.state.high)}°C/{Math.round(this.state.low)}°C</td>
+                            </tr>
+                            <tr>
+                             <td>Sunrise</td>
+                                <td>{this.state.sunrise}</td>
+                            </tr>
+                            <tr>
+                                <td>Sunset</td>
+                                <td>{this.state.sunset}</td>
+                            </tr>
+                            <tr>
+                                <td>Humidity</td>
+                                <td>{this.state.humidity}%</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 

@@ -7,6 +7,10 @@
   padding: none;
 }
 
+li{
+  list-style: none;
+}
+
 .search-box{
   display: flex;
   /* margin: auto; */
@@ -59,20 +63,18 @@
 .weather-box{
   display: flex;
   justify-content: center;
+  align-items: center;
+  
 }
 
+
+
 .weather-box .temp{
-  position: relative;
-  display: inline-block;
-  /* display: flex; */
-  /* align-items: center; */
-  /* justify-content: center; */
-  margin: 30px auto;
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 16px;
 
   padding: 15px 25px;
-
+  margin: 10px;
   color: #FFF;
   font-size: 102px;
   font-weight: 900;
@@ -80,6 +82,12 @@
   text-shadow: 3px 6px rgba(50, 50, 70, 0.5);
   text-align: center;
   box-shadow: 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.weather-box .detailed-info{
+  color: #FFF;
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .weather-description{
